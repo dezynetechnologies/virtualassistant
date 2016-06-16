@@ -20,7 +20,7 @@ const
 
 var app = express();
 
-app.set('port', process.env.OPENSHIFT_NODEJS_PORT || 3000);
+app.set('port', process.env.PORT || 5000);
 app.use(bodyParser.json({ verify: verifyRequestSignature }));
 app.use(express.static('public'));
 
@@ -510,7 +510,7 @@ function callSendAPI(messageData) {
 // Start server
 // Webhooks must be available via SSL with a certificate signed by a valid
 // certificate authority.
-app.listen(app.get('port'), function() {
+app.listen(process.env.PORT || 5000, function() {
   console.log('Node app is running on port', app.get('port'));
 });
 
