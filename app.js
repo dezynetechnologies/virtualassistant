@@ -59,9 +59,9 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN)) {
  *
  */
 app.get('/webhook', function(req, res) {
-//  if (req.query['hub.mode'] === 'subscribe' &&
-//      req.query['hub.verify_token'] === VALIDATION_TOKEN) {
-if (req.query['hub.mode'] === 'subscribe'){
+  if (req.query['hub.mode'] === 'subscribe' &&
+      req.query['hub.verify_token'] === VALIDATION_TOKEN) {
+//if (req.query['hub.mode'] === 'subscribe'){
     console.log("Validating webhook");
     console.log("Validating webhook");
     console.log(req.query);
@@ -210,7 +210,7 @@ function receivedMessage(event) {
   // You may get a text or attachment but not both
   var messageText = message.text;
   var messageAttachments = message.attachments;
-
+  console.log('Message Received:',messageText);
 
   if (messageText) {
 
@@ -235,6 +235,7 @@ function receivedMessage(event) {
         break;
 
       default:
+        console.log('Message Received:',messageText);
         sendTextMessage(senderID, messageText);
     }
   } else if (messageAttachments) {
@@ -321,6 +322,7 @@ function sendImageMessage(recipientId) {
  *
  */
 function sendTextMessage(recipientId, messageText) {
+  console.log('sendTextMessage() called');
   var messageData = {
     recipient: {
       id: recipientId
