@@ -1,0 +1,71 @@
+<!--
+
+Copyright 2016-present, Facebook, Inc.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+
+-->
+<html>
+    <head>
+        <title>Messenger Demo</title>
+    </head>
+    <body>
+        <script>
+            window.fbAsyncInit = function() {
+                FB.init({appId: '1115380878500785', xfbml: true, version: 'v2.6'});
+                // Place following code after FB.init call.
+
+                function onLogin(response) {
+                    if (response.status == 'connected') {
+                        FB.api('/me?fields=first_name', function(data) {
+                            var welcomeBlock = document.getElementById('fb-welcome');
+                            welcomeBlock.innerHTML = 'Hello, ' + data.first_name + '!';
+                        });
+                    }
+                }
+
+                FB.getLoginStatus(function(response) {
+                    // Check login status on load, and if the user is already logged in, go directly to the welcome message.
+                    if (response.status == 'connected') {
+                        onLogin(response);
+                    } else {
+                        // Otherwise, show Login dialog first.
+                        FB.login(function(response) {
+                            onLogin(response);
+                        }, {scope: 'user_friends, email'});
+                    }
+                });
+            };
+
+            (function(d, s, id) {
+                var js,
+                    fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) {
+                    return;
+                }
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
+
+        <h1>Messenger Demo</h1>
+        <h1 id="fb-welcome"></h1>
+
+        <div>
+            <p>The "Send to Messenger" plugin will trigger an authentication callback to your webhook.</p>
+
+            <div class="fb-send-to-messenger" messenger_app_id='1115380878500785' page_id='735718873162440' data-ref="PASS_THROUGH_PARAM" color="blue" size="standard"></div>
+        </div>
+
+        <div>
+            <p>The "Message Us" plugin takes the user directly to Messenger and into a thread with your Page.</p>
+
+            <div class="fb-messengermessageus" messenger_app_id='1115380878500785' page_id='735718873162440' color="blue" size="standard"></div>
+        </div>
+
+    </body>
+</html>
