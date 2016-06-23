@@ -154,6 +154,8 @@ const actions = {
     },
     error(sessionId, context, error) {
         console.log('error() called');
+        console.log(sessionId);
+        console.log(context);
         console.log(error.message);
     },
     // You should implement your custom actions here
@@ -445,6 +447,7 @@ function sendTextMessage(recipientId, messageText) {
     // We retrieve the user's current session, or create one if it doesn't exist
     // This is needed for our bot to figure out the conversation history
     const sessionId = findOrCreateSession(recipientId);
+    console.log(sessions);
 
     // We received a text message
 
