@@ -149,9 +149,11 @@ const actions = {
         }
     },
     merge(sessionId, context, entities, message, cb) {
+        console.log('merge() called');
         cb(context);
     },
     error(sessionId, context, error) {
+        console.log('error() called');
         console.log(error.message);
     },
     // You should implement your custom actions here
